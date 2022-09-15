@@ -13,9 +13,27 @@ image.src = './assets/images/mapOne.png';
 const playerImage = new Image();
 playerImage.src = './assets/images/ACharDown.png';
 
-image.onload = () => {
-    //image, x start, y start
-    ctx.drawImage(image, -1745, -400);
+class Sprite {
+    constructor({
+        position,
+        image
+    }) {
+        this.position = position
+        this.image = image
+    }
+
+    draw() {
+        ctx.drawImage(this.image, this.position.x, this.position.y);
+    }
+};
+
+const background = new Sprite({ position: { x: -1745, y: -400 }, image: image })
+//animation loop
+function animate() {
+    window.requestAnimationFrame(animate);
+
+    //Draw map and player
+    background.draw();
     //image, crop x4, x start, y start, width, height
     ctx.drawImage(
         playerImage,
@@ -27,10 +45,13 @@ image.onload = () => {
         canvas.height / 2 - playerImage.height / 2,
         100,
         100);
-};
 
+};
+animate();
+
+//Player movement
 window.addEventListener('keydown', (e) => {
-    console.log('pressed', e);
+    // console.log('pressed', e);
     switch (e.key) {
         case 'w':
             console.log('Pressed w/up')
@@ -45,4 +66,4 @@ window.addEventListener('keydown', (e) => {
             console.log('Pressed d/right')
             break;
     }
-})
+});
