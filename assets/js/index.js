@@ -10,8 +10,11 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 const image = new Image();
 image.src = './assets/images/mapOne.png';
 
+const playerImage = new Image();
+playerImage.src = './assets/images/ACharDown.png';
+
 image.onload = () => {
     //image, x start, y start
-    ctx.drawImage(image, 0, 0);
+    ctx.drawImage(image, -1700, -400);
+    ctx.drawImage(playerImage, canvas.width / 2, canvas.height / 2, 175, 175);
 };
-
