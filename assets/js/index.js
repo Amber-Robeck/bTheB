@@ -28,3 +28,21 @@ image.onload = () => {
         100,
         100);
 };
+
+window.addEventListener('keydown', (e) => {
+    console.log('pressed', e);
+    switch (e.key) {
+        case 'w':
+            console.log('Pressed w/up')
+            break;
+        case 's':
+            console.log('Pressed s/down')
+            break;
+        case 'a':
+            console.log('Pressed a/left')
+            break;
+        case 'd':
+            console.log('Pressed d/right')
+            break;
+    }
+})
