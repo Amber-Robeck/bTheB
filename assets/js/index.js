@@ -15,6 +15,16 @@ playerImage.src = './assets/images/ACharDown.png';
 
 image.onload = () => {
     //image, x start, y start
-    ctx.drawImage(image, -1700, -400);
-    ctx.drawImage(playerImage, canvas.width / 2, canvas.height / 2, 175, 175);
+    ctx.drawImage(image, -1745, -400);
+    //image, crop x4, x start, y start, width, height
+    ctx.drawImage(
+        playerImage,
+        0,
+        0,
+        playerImage.width / 2,
+        playerImage.height / 2,
+        canvas.width / 2 - playerImage.width,
+        canvas.height / 2 - playerImage.height / 2,
+        100,
+        100);
 };
