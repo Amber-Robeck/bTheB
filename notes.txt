@@ -1,0 +1,7 @@
+Still having collision issues top right corner
+collision when pressed against a collion want to be able to still move other directions
+FOREGROUND-Fence needs whole Fence
+FOREGROUND-main house roof needs down one more square
+FOREGROUND-top left trees
+FOREGROUND-top of other house and garage
+FOREGROUND-tree on far left

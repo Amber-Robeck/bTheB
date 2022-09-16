@@ -50,6 +50,10 @@ console.log(boundaries)
 const image = new Image();
 image.src = './assets/images/mapOne.png';
 
+//foreground image
+const foregroundImage = new Image();
+foregroundImage.src = './assets/images/foreground.png';
+
 //sprite player is 48x48
 const playerImage = new Image();
 playerImage.src = './assets/images/ACharDown.png';
@@ -104,7 +108,8 @@ const player = new Sprite({
     }
 });
 
-const background = new Sprite({ position: { x: offset.x, y: offset.y }, image: image })
+const background = new Sprite({ position: { x: offset.x, y: offset.y }, image: image });
+const foreground = new Sprite({ position: { x: offset.x, y: offset.y }, image: foregroundImage });
 
 const keys = {
     w: {
@@ -123,7 +128,7 @@ const keys = {
 
 // const testBoundary = new Boundary({ position: { x: 400, y: 400 } });
 
-const movables = [background, ...boundaries];
+const movables = [background, foreground, ...boundaries];
 
 function isCollision({ rectangle1, rectangle2 }) {
     const numberOffset = 24;
@@ -154,19 +159,9 @@ function animate() {
         }
 
     });
-    // testBoundary.draw();
-    // //image, crop x4, x start, y start, width, height
-    // ctx.drawImage(
-    //     playerImage,
-    //     0,
-    //     0,
-    //     playerImage.width / 2,
-    //     playerImage.height / 2,
-    //     canvas.width / 2 - playerImage.width,
-    //     canvas.height / 2 - playerImage.height / 2,
-    //     100,
-    //     100);
     player.draw();
+
+    foreground.draw();
 
 
     //background movement
