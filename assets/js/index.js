@@ -66,6 +66,11 @@ class Sprite {
         this.image = image
         this.frames = frames
         this.resize = resize
+        this.image.onload = () => {
+            this.width = this.image.width / this.frames.max
+            this.height = this.image.height / this.frames.max
+            console.log('width', this.width, 'height', this.height)
+        }
     }
 
     draw() {
@@ -116,9 +121,19 @@ const keys = {
     }
 };
 
-const testBoundary = new Boundary({ position: { x: 400, y: 400 } });
+// const testBoundary = new Boundary({ position: { x: 400, y: 400 } });
 
-const movables = [background, testBoundary];
+const movables = [background, ...boundaries];
+
+function isCollision({ rectangle1, rectangle2 }) {
+    const numberOffset = 24;
+    const numberTwoOffset = 36;
+    return (rectangle1.position.x + rectangle1.width >= rectangle2.position.x - numberTwoOffset &&
+        rectangle1.position.x + numberOffset <= rectangle2.position.x + rectangle2.width &&
+        rectangle1.position.y + numberOffset <= rectangle2.position.y + rectangle2.height &&
+        rectangle1.position.y + rectangle1.height + numberTwoOffset >= rectangle2.position.y
+    )
+}
 
 //animation loop
 function animate() {
@@ -127,10 +142,19 @@ function animate() {
     //Draw map and player
     background.draw();
     //boundary
-    // boundaries.forEach(bdry => {
-    //     bdry.draw()
-    // });
-    testBoundary.draw();
+    boundaries.forEach(bdry => {
+        bdry.draw()
+        //collision detection
+        if (isCollision({
+            rectangle1: player,
+            rectangle2: bdry
+        })
+        ) {
+            console.log('collision')
+        }
+
+    });
+    // testBoundary.draw();
     // //image, crop x4, x start, y start, width, height
     // ctx.drawImage(
     //     playerImage,
@@ -143,8 +167,8 @@ function animate() {
     //     100,
     //     100);
     player.draw();
-    //collision detection
-    // if(player)
+
+
     //background movement
     if (keys.w.pressed && lastKey === 'w') {
         movables.forEach((moveable) => { moveable.position.y += 3 });
