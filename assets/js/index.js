@@ -13,6 +13,8 @@ image.src = './assets/images/mapOne.png';
 const playerImage = new Image();
 playerImage.src = './assets/images/ACharDown.png';
 
+let lastKey = '';
+
 class Sprite {
     constructor({
         position,
@@ -63,16 +65,16 @@ function animate() {
         100);
 
     //background movement
-    if (keys.w.pressed) {
+    if (keys.w.pressed && lastKey === 'w') {
         background.position.y += 3;
     }
-    else if (keys.s.pressed) {
+    else if (keys.s.pressed && lastKey === 's') {
         background.position.y -= 3;
     }
-    else if (keys.a.pressed) {
+    else if (keys.a.pressed && lastKey === 'a') {
         background.position.x += 3;
     }
-    else if (keys.d.pressed) {
+    else if (keys.d.pressed && lastKey === 'd') {
         background.position.x -= 3;
     }
 };
@@ -85,19 +87,23 @@ window.addEventListener('keydown', (e) => {
         case 'w':
             console.log('Pressed w/up')
             keys.w.pressed = true;
+            lastKey = 'w';
             // console.log('keys', keys)
             break;
         case 's':
             console.log('Pressed s/down')
             keys.s.pressed = true;
+            lastKey = 's';
             break;
         case 'a':
             console.log('Pressed a/left')
             keys.a.pressed = true;
+            lastKey = 'a';
             break;
         case 'd':
             console.log('Pressed d/right')
             keys.d.pressed = true;
+            lastKey = 'd';
             break;
     }
 });
