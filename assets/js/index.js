@@ -92,7 +92,7 @@ class Sprite {
 const player = new Sprite({
     position: {
         x: canvas.width / 2 - 52,
-        y: canvas.height / 2 - 80 / 2
+        y: canvas.height / 2 + 45
     },
     image: playerImage,
     frames: {
@@ -131,7 +131,7 @@ function isCollision({ rectangle1, rectangle2 }) {
     return (rectangle1.position.x + rectangle1.width >= rectangle2.position.x - numberTwoOffset &&
         rectangle1.position.x + numberOffset <= rectangle2.position.x + rectangle2.width &&
         rectangle1.position.y + numberOffset <= rectangle2.position.y + rectangle2.height &&
-        rectangle1.position.y + rectangle1.height + numberTwoOffset >= rectangle2.position.y
+        rectangle1.position.y + rectangle1.height >= rectangle2.position.y - + numberTwoOffset
     )
 }
 
@@ -170,18 +170,96 @@ function animate() {
 
 
     //background movement
+    let movement = true;
     if (keys.w.pressed && lastKey === 'w') {
-        movables.forEach((moveable) => { moveable.position.y += 3 });
+        for (let index = 0; index < boundaries.length; index++) {
+            const bdry = boundaries[index];
+            if (isCollision({
+                rectangle1: player,
+                rectangle2: {
+                    ...bdry, position: {
+                        x: bdry.position.x,
+                        y: bdry.position.y + 5
+                    }
+                }
+            })
+            ) {
+                console.log('collision')
+                movement = false;
+                break
+            }
+        }
+        if (movement) {
+            movables.forEach((moveable) => { moveable.position.y += 3 });
+        }
     }
     else if (keys.s.pressed && lastKey === 's') {
-        movables.forEach((moveable) => { moveable.position.y -= 3 });
+        for (let index = 0; index < boundaries.length; index++) {
+            const bdry = boundaries[index];
+            if (isCollision({
+                rectangle1: player,
+                rectangle2: {
+                    ...bdry, position: {
+                        x: bdry.position.x,
+                        y: bdry.position.y - 5
+                    }
+                }
+            })
+            ) {
+                console.log('collision')
+                movement = false;
+                break
+            }
+        }
+        if (movement) {
+            movables.forEach((moveable) => { moveable.position.y -= 3 });
+        }
     }
     else if (keys.a.pressed && lastKey === 'a') {
-        movables.forEach((moveable) => { moveable.position.x += 3 });
+        for (let index = 0; index < boundaries.length; index++) {
+            const bdry = boundaries[index];
+            if (isCollision({
+                rectangle1: player,
+                rectangle2: {
+                    ...bdry, position: {
+                        x: bdry.position.x + 5,
+                        y: bdry.position.y
+                    }
+                }
+            })
+            ) {
+                console.log('collision')
+                movement = false;
+                break
+            }
+        }
+        if (movement) {
+            movables.forEach((moveable) => { moveable.position.x += 3 });
+        }
     }
     else if (keys.d.pressed && lastKey === 'd') {
-        movables.forEach((moveable) => { moveable.position.x -= 3 });
+        for (let index = 0; index < boundaries.length; index++) {
+            const bdry = boundaries[index];
+            if (isCollision({
+                rectangle1: player,
+                rectangle2: {
+                    ...bdry, position: {
+                        x: bdry.position.x - 5,
+                        y: bdry.position.y
+                    }
+                }
+            })
+            ) {
+                console.log('collision')
+                movement = false;
+                break
+            }
+        }
+        if (movement) {
+            movables.forEach((moveable) => { moveable.position.x -= 3 });
+        }
     }
+
 };
 animate();
 
