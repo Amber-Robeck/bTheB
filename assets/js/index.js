@@ -115,16 +115,16 @@ function animate() {
 
     //background movement
     if (keys.w.pressed && lastKey === 'w') {
-        movables.forEach(moveable => { moveable.position.y += 3 });
+        movables.forEach((moveable) => { moveable.position.y += 3 });
     }
     else if (keys.s.pressed && lastKey === 's') {
-        background.position.y -= 3;
+        movables.forEach((moveable) => { moveable.position.y -= 3 });
     }
     else if (keys.a.pressed && lastKey === 'a') {
-        background.position.x += 3;
+        movables.forEach((moveable) => { moveable.position.x += 3 });
     }
     else if (keys.d.pressed && lastKey === 'd') {
-        background.position.x -= 3;
+        movables.forEach((moveable) => { moveable.position.x -= 3 });
     }
 };
 animate();
