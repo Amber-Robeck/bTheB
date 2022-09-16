@@ -25,7 +25,7 @@ class Boundary {
     }
 
     draw() {
-        ctx.fillStyle = 'red'
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.0)'
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 };
@@ -179,7 +179,7 @@ function animate() {
                 rectangle2: {
                     ...bdry, position: {
                         x: bdry.position.x,
-                        y: bdry.position.y + 5
+                        y: bdry.position.y
                     }
                 }
             })
