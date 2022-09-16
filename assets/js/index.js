@@ -3,9 +3,48 @@ const ctx = canvas.getContext('2d');
 canvas.width = 1024;
 canvas.height = 576;
 
-ctx.fillStyle = 'lightgrey';
-ctx.fillRect(0, 0, canvas.width, canvas.height);
+// ctx.fillStyle = 'lightgrey';
+// ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+//Collisions
+const collisionsArray = [];
+//map 70x40 for every 70(row) create new array
+for (let index = 0; index < collisions.length; index += 70) {
+    collisionsArray.push(collisions.slice(index, index + 70));
+};
+// console.log(collisionsArray)
+
+//map exported at 4X (12)
+class Boundary {
+    static width = 48
+    static height = 48
+    constructor({ position }) {
+        this.position = position
+        this.width = 48
+        this.height = 48
+    }
+
+    draw() {
+        ctx.fillStyle = 'red'
+        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+};
+
+const offset = {
+    x: -1745,
+    y: -400
+};
+
+const boundaries = [];
+
+collisionsArray.forEach((row, i) => {
+    row.forEach((bdry, j) => {
+        if (bdry == 1025) {
+            boundaries.push(new Boundary({ position: { x: j * Boundary.width + offset.x, y: i * Boundary.height + offset.y } }))
+        }
+    })
+})
+console.log(boundaries)
 //draw image needs an html image object not src
 const image = new Image();
 image.src = './assets/images/mapOne.png';
@@ -29,7 +68,8 @@ class Sprite {
     }
 };
 
-const background = new Sprite({ position: { x: -1745, y: -400 }, image: image })
+
+const background = new Sprite({ position: { x: offset.x, y: offset.y }, image: image })
 
 const keys = {
     w: {
@@ -46,12 +86,21 @@ const keys = {
     }
 };
 
+const testBoundary = new Boundary({ position: { x: 400, y: 400 } });
+
+const movables = [background, testBoundary];
+
 //animation loop
 function animate() {
     window.requestAnimationFrame(animate);
 
     //Draw map and player
     background.draw();
+    //boundary
+    // boundaries.forEach(bdry => {
+    //     bdry.draw()
+    // });
+    testBoundary.draw();
     //image, crop x4, x start, y start, width, height
     ctx.drawImage(
         playerImage,
@@ -66,7 +115,7 @@ function animate() {
 
     //background movement
     if (keys.w.pressed && lastKey === 'w') {
-        background.position.y += 3;
+        movables.forEach(moveable => { moveable.position.y += 3 });
     }
     else if (keys.s.pressed && lastKey === 's') {
         background.position.y -= 3;
