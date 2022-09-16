@@ -46,28 +46,58 @@ collisionsArray.forEach((row, i) => {
 })
 console.log(boundaries)
 //draw image needs an html image object not src
+//background image is 3360x1920
 const image = new Image();
 image.src = './assets/images/mapOne.png';
 
+//sprite player is 48x48
 const playerImage = new Image();
 playerImage.src = './assets/images/ACharDown.png';
-
 let lastKey = '';
 
 class Sprite {
     constructor({
         position,
-        image
+        image,
+        frames = { max: 1 },
+        resize = { x: 3360, y: 1920 }
     }) {
         this.position = position
         this.image = image
+        this.frames = frames
+        this.resize = resize
     }
 
     draw() {
-        ctx.drawImage(this.image, this.position.x, this.position.y);
+        //image, crop x4, x start, y start, width, height
+        ctx.drawImage(
+            this.image,
+            0,
+            0,
+            this.image.width / this.frames.max,
+            this.image.height / this.frames.max,
+            this.position.x,
+            this.position.y,
+            this.resize.x,
+            this.resize.y
+        );
     }
 };
 
+const player = new Sprite({
+    position: {
+        x: canvas.width / 2 - 52,
+        y: canvas.height / 2 - 80 / 2
+    },
+    image: playerImage,
+    frames: {
+        max: 2
+    },
+    resize: {
+        x: 100,
+        y: 100
+    }
+});
 
 const background = new Sprite({ position: { x: offset.x, y: offset.y }, image: image })
 
@@ -101,18 +131,20 @@ function animate() {
     //     bdry.draw()
     // });
     testBoundary.draw();
-    //image, crop x4, x start, y start, width, height
-    ctx.drawImage(
-        playerImage,
-        0,
-        0,
-        playerImage.width / 2,
-        playerImage.height / 2,
-        canvas.width / 2 - playerImage.width,
-        canvas.height / 2 - playerImage.height / 2,
-        100,
-        100);
-
+    // //image, crop x4, x start, y start, width, height
+    // ctx.drawImage(
+    //     playerImage,
+    //     0,
+    //     0,
+    //     playerImage.width / 2,
+    //     playerImage.height / 2,
+    //     canvas.width / 2 - playerImage.width,
+    //     canvas.height / 2 - playerImage.height / 2,
+    //     100,
+    //     100);
+    player.draw();
+    //collision detection
+    // if(player)
     //background movement
     if (keys.w.pressed && lastKey === 'w') {
         movables.forEach((moveable) => { moveable.position.y += 3 });
