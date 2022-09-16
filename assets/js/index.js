@@ -179,7 +179,7 @@ function animate() {
                 rectangle2: {
                     ...bdry, position: {
                         x: bdry.position.x,
-                        y: bdry.position.y
+                        y: bdry.position.y + 2
                     }
                 }
             })
@@ -201,7 +201,7 @@ function animate() {
                 rectangle2: {
                     ...bdry, position: {
                         x: bdry.position.x,
-                        y: bdry.position.y - 5
+                        y: bdry.position.y - 2
                     }
                 }
             })
@@ -222,7 +222,7 @@ function animate() {
                 rectangle1: player,
                 rectangle2: {
                     ...bdry, position: {
-                        x: bdry.position.x + 5,
+                        x: bdry.position.x + 2,
                         y: bdry.position.y
                     }
                 }
@@ -244,7 +244,7 @@ function animate() {
                 rectangle1: player,
                 rectangle2: {
                     ...bdry, position: {
-                        x: bdry.position.x - 5,
+                        x: bdry.position.x - 2,
                         y: bdry.position.y
                     }
                 }
