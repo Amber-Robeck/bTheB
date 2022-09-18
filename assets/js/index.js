@@ -68,21 +68,22 @@ class Sprite {
     }) {
         this.position = position
         this.image = image
-        this.frames = frames
+        this.frames = { ...frames, xVal: 0, yVal: 0, eFrames: 0 }
         this.resize = resize
         this.image.onload = () => {
             this.width = this.image.width / this.frames.max
             this.height = this.image.height / this.frames.max
             console.log('width', this.width, 'height', this.height)
         }
+        this.moving = false
     }
 
     draw() {
         //image, crop x4, x start, y start, width, height
         ctx.drawImage(
             this.image,
-            0,
-            0,
+            this.frames.xVal * 24,
+            this.frames.yVal * 24,
             this.image.width / this.frames.max,
             this.image.height / this.frames.max,
             this.position.x,
@@ -90,6 +91,35 @@ class Sprite {
             this.resize.x,
             this.resize.y
         );
+
+        //if button is pushed cycle through sprite sheet
+        if (this.moving) {
+            if (this.frames.max > 1) {
+                this.frames.eFrames++
+            }
+            if (this.frames.eFrames % 20 === 0) {
+
+
+                if (this.frames.xVal < this.frames.max - 1) {
+                    this.frames.xVal++;
+                }
+                else {
+                    this.frames.xVal = 0;
+                    // if (this.frames.yVal == 0) {
+                    //     this.frames.yVal++;
+                    // } else {
+                    //     this.frames.xVal = 0;
+                    //     this.frames.yVal = 0;
+                    // }
+                    if (this.frames.yVal < this.frames.max - 1) {
+                        this.frames.yVal++;
+                    } else {
+                        this.frames.yVal = 0;
+                    }
+                }
+                // console.log(this.frames.yVal)
+            }
+        }
     }
 };
 
@@ -166,7 +196,9 @@ function animate() {
 
     //background movement
     let movement = true;
+    player.moving = false;
     if (keys.w.pressed && lastKey === 'w') {
+        player.moving = true;
         for (let index = 0; index < boundaries.length; index++) {
             const bdry = boundaries[index];
             if (isCollision({
@@ -189,6 +221,7 @@ function animate() {
         }
     }
     else if (keys.s.pressed && lastKey === 's') {
+        player.moving = true;
         for (let index = 0; index < boundaries.length; index++) {
             const bdry = boundaries[index];
             if (isCollision({
@@ -211,6 +244,7 @@ function animate() {
         }
     }
     else if (keys.a.pressed && lastKey === 'a') {
+        player.moving = true;
         for (let index = 0; index < boundaries.length; index++) {
             const bdry = boundaries[index];
             if (isCollision({
@@ -233,6 +267,7 @@ function animate() {
         }
     }
     else if (keys.d.pressed && lastKey === 'd') {
+        player.moving = true;
         for (let index = 0; index < boundaries.length; index++) {
             const bdry = boundaries[index];
             if (isCollision({
