@@ -96,7 +96,7 @@ class Sprite {
 const player = new Sprite({
     position: {
         x: canvas.width / 2 - 52,
-        y: canvas.height / 2 + 45
+        y: canvas.height / 2 + -35
     },
     image: playerImage,
     frames: {
@@ -174,7 +174,7 @@ function animate() {
                 rectangle2: {
                     ...bdry, position: {
                         x: bdry.position.x,
-                        y: bdry.position.y + 2
+                        y: bdry.position.y + 3
                     }
                 }
             })
@@ -196,7 +196,7 @@ function animate() {
                 rectangle2: {
                     ...bdry, position: {
                         x: bdry.position.x,
-                        y: bdry.position.y - 2
+                        y: bdry.position.y - 3
                     }
                 }
             })
@@ -217,7 +217,7 @@ function animate() {
                 rectangle1: player,
                 rectangle2: {
                     ...bdry, position: {
-                        x: bdry.position.x + 2,
+                        x: bdry.position.x + 3,
                         y: bdry.position.y
                     }
                 }
@@ -239,7 +239,7 @@ function animate() {
                 rectangle1: player,
                 rectangle2: {
                     ...bdry, position: {
-                        x: bdry.position.x - 2,
+                        x: bdry.position.x - 3,
                         y: bdry.position.y
                     }
                 }
