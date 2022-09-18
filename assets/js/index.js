@@ -55,8 +55,18 @@ const foregroundImage = new Image();
 foregroundImage.src = './assets/images/foreground.png';
 
 //sprite player is 48x48
-const playerImage = new Image();
-playerImage.src = './assets/images/ACharDown.png';
+const playerDownImage = new Image();
+playerDownImage.src = './assets/images/ACharDown.png';
+
+const playerUpImage = new Image();
+playerUpImage.src = './assets/images/ACharUp.png';
+
+const playerLeftImage = new Image();
+playerLeftImage.src = './assets/images/ACharLeft.png';
+
+const playerRightImage = new Image();
+playerRightImage.src = './assets/images/ACharRight.png';
+
 let lastKey = '';
 
 class Sprite {
@@ -64,7 +74,8 @@ class Sprite {
         position,
         image,
         frames = { max: 1 },
-        resize = { x: 3360, y: 1920 }
+        resize = { x: 3360, y: 1920 },
+        sprites
     }) {
         this.position = position
         this.image = image
@@ -76,6 +87,7 @@ class Sprite {
             console.log('width', this.width, 'height', this.height)
         }
         this.moving = false
+        this.sprites = sprites
     }
 
     draw() {
@@ -128,13 +140,19 @@ const player = new Sprite({
         x: canvas.width / 2 - 52,
         y: canvas.height / 2 + -35
     },
-    image: playerImage,
+    image: playerDownImage,
     frames: {
         max: 2
     },
     resize: {
         x: 100,
         y: 100
+    },
+    sprites: {
+        up: playerUpImage,
+        down: playerDownImage,
+        left: playerLeftImage,
+        right: playerRightImage
     }
 });
 
@@ -179,14 +197,14 @@ function animate() {
     //boundary
     boundaries.forEach(bdry => {
         bdry.draw()
-        //collision detection
-        if (isCollision({
-            rectangle1: player,
-            rectangle2: bdry
-        })
-        ) {
-            console.log('collision')
-        }
+        // //collision detection
+        // if (isCollision({
+        //     rectangle1: player,
+        //     rectangle2: bdry
+        // })
+        // ) {
+        //     console.log('collision')
+        // }
 
     });
     player.draw();
@@ -199,6 +217,7 @@ function animate() {
     player.moving = false;
     if (keys.w.pressed && lastKey === 'w') {
         player.moving = true;
+        player.image = player.sprites.up;
         for (let index = 0; index < boundaries.length; index++) {
             const bdry = boundaries[index];
             if (isCollision({
@@ -211,7 +230,7 @@ function animate() {
                 }
             })
             ) {
-                console.log('collision')
+                // console.log('collision')
                 movement = false;
                 break
             }
@@ -222,6 +241,7 @@ function animate() {
     }
     else if (keys.s.pressed && lastKey === 's') {
         player.moving = true;
+        player.image = player.sprites.down;
         for (let index = 0; index < boundaries.length; index++) {
             const bdry = boundaries[index];
             if (isCollision({
@@ -234,7 +254,7 @@ function animate() {
                 }
             })
             ) {
-                console.log('collision')
+                // console.log('collision')
                 movement = false;
                 break
             }
@@ -245,6 +265,7 @@ function animate() {
     }
     else if (keys.a.pressed && lastKey === 'a') {
         player.moving = true;
+        player.image = player.sprites.left;
         for (let index = 0; index < boundaries.length; index++) {
             const bdry = boundaries[index];
             if (isCollision({
@@ -257,7 +278,7 @@ function animate() {
                 }
             })
             ) {
-                console.log('collision')
+                // console.log('collision')
                 movement = false;
                 break
             }
@@ -268,6 +289,7 @@ function animate() {
     }
     else if (keys.d.pressed && lastKey === 'd') {
         player.moving = true;
+        player.image = player.sprites.right;
         for (let index = 0; index < boundaries.length; index++) {
             const bdry = boundaries[index];
             if (isCollision({
@@ -280,7 +302,7 @@ function animate() {
                 }
             })
             ) {
-                console.log('collision')
+                // console.log('collision')
                 movement = false;
                 break
             }
@@ -298,23 +320,23 @@ window.addEventListener('keydown', (e) => {
     // console.log('pressed', e);
     switch (e.key) {
         case 'w':
-            console.log('Pressed w/up')
+            // console.log('Pressed w/up')
             keys.w.pressed = true;
             lastKey = 'w';
             // console.log('keys', keys)
             break;
         case 's':
-            console.log('Pressed s/down')
+            // console.log('Pressed s/down')
             keys.s.pressed = true;
             lastKey = 's';
             break;
         case 'a':
-            console.log('Pressed a/left')
+            // console.log('Pressed a/left')
             keys.a.pressed = true;
             lastKey = 'a';
             break;
         case 'd':
-            console.log('Pressed d/right')
+            // console.log('Pressed d/right')
             keys.d.pressed = true;
             lastKey = 'd';
             break;
